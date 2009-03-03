@@ -19,8 +19,22 @@ module ActionView
           country_options += "<option value=\"\" disabled=\"disabled\">-------------</option>\n"
         end
 
-        return country_options + options_for_select(COUNTRIES, selected)
+        return country_options + options_for_select(countries, selected)
       end
+
+      def countries
+        if defined?(I18n)
+          def countries
+            I18n.t(:countries).values
+          end
+          countries
+        else
+          def countries
+            COUNTRIES
+          end
+        end
+      end
+
       # All the countries included in the country_options output.
       COUNTRIES = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola",
         "Anguilla", "Antarctica", "Antigua And Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria",
@@ -58,7 +72,7 @@ module ActionView
         "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
         "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela",
         "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara",
-        "Yemen", "Zambia", "Zimbabwe"] unless const_defined?("COUNTRIES")
+        "Yemen", "Zambia", "Zimbabwe"] unless const_defined?("COUNTRIES") || defined?(I18n)
     end
     
     class InstanceTag
