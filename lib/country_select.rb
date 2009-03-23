@@ -25,14 +25,14 @@ module ActionView
       def countries
         if defined?(I18n)
           def countries
-            I18n.t(:countries).values
+            I18n.t(:countries).values.sort
           end
-          countries
         else
           def countries
             COUNTRIES
           end
         end
+        countries
       end
 
       # All the countries included in the country_options output.
